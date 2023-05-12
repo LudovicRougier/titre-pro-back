@@ -53,7 +53,7 @@ services:
         image: adminer
         restart: always
         environment:
-            - ADMINER_DESIGN=pepa-linha-dark
+            - ADMINER_DESIGN=hydra
         ports:
             - 8082:8080
         networks:
