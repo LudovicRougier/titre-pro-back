@@ -39,6 +39,10 @@ class AuthController extends Controller
     {
         $user = User::create($request->all());
 
+        // if ($user) {
+        //     return $this->login($request);
+        // }
+
         return response()->json($user, 201);
     }
 

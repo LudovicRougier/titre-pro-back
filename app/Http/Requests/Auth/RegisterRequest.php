@@ -3,8 +3,12 @@
 namespace App\Http\Requests\Auth;
 
 use App\Enums\CountryEnum;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
 {
@@ -58,7 +62,13 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    public function fails() {
-        dd('test');
+    protected function failedValidation(Validator $validator) {
+        $errors = (new ValidationException($validator))->errors();
+
+        throw new HttpResponseException(
+            response()->json([
+                'errors' => $errors
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 }
