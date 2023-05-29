@@ -9,9 +9,10 @@ type User {
     created_at: DateTime!,
     updated_at: DateTime,
     deleted_at: DateTime
+
+    genres: [Genre!]!
 }
 
 extend type Query {
-    # users(ids: [ID] @in(key: "id")): [User!]! @paginate(defaultCount: 50),
     user(id: ID! @eq): User @find
 }

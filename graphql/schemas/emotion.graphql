@@ -1,0 +1,13 @@
+type Emotion {
+    id: ID!,
+    name: String!,
+    color: String!,
+    is_positive: Boolean!,
+    created_at: DateTime!,
+    updated_at: DateTime
+}
+
+extend type Query {
+    emotions(ids: [ID] @in(key: "id")): [Emotion!]! @paginate(defaultCount: 50),
+    emotion(id: ID! @eq): Emotion @find
+}

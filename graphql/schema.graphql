@@ -5,6 +5,9 @@ scalar DateTime
 scalar Date
 @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+scalar JSON
+@scalar(class: "MLL\\GraphQLScalars\\JSON")
+
 "Indicates what fields are available at the top level of a query operation."
 type Query
 
