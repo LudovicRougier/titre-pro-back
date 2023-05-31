@@ -1,16 +1,28 @@
-type Movie {
-    id: ID!,
-    title: String!,
-    tmdb_api_id: String!,
-    synopsis: String,
-    medias: JSON!,
-    created_at: DateTime!,
+type Prompt {
+    id: ID
+    user_input: String!
+    custom_answer: String!
+    is_positive: Boolean
+    created_at: DateTime!
     updated_at: DateTime
+    deleted_at: DateTime
 
-    genres: [Genre!]!
+    mainEmotion: Emotion
+    subEmotion: Emotion
+    user: User
+    movies: [Movie!]!
 }
 
 extend type Query {
-    movies(ids: [ID] @in(key: "id")): [Movie!]! @paginate(defaultCount: 50),
-    movie(id: ID! @eq): Movie @find
+    prompt(id: ID! @eq): Prompt @find
+}
+
+type Mutation {
+  createPrompt(input: UserInput!): Prompt
+}
+
+input UserInput {
+  user_input: String!,
+  is_personnalized: Boolean,
+  is_opposite: Boolean,
 }

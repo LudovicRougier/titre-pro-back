@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Movie extends Model
+class Prompt extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,7 @@ class Movie extends Model
         'is_positive',
         'main_emotion_id',
         'sub_emotion_id',
+        'user_id',
     ];
 
     /**

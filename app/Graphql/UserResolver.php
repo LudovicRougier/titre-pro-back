@@ -10,6 +10,7 @@ class UserResolver
     {
         return $user->country->value;
     }
+
     public function gender(User $user): string | null
     {
         return $user->gender->value ?? null;

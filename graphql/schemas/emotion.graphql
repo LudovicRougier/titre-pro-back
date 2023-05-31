@@ -8,6 +8,6 @@ type Emotion {
 }
 
 extend type Query {
-    emotions(ids: [ID] @in(key: "id")): [Emotion!]! @paginate(defaultCount: 50),
+    emotions(ids: [ID] @in(key: "id")): [Emotion]! @paginate(defaultCount: 50),
     emotion(id: ID! @eq): Emotion @find
 }

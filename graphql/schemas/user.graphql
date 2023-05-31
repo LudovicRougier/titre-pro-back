@@ -10,7 +10,8 @@ type User {
     updated_at: DateTime,
     deleted_at: DateTime
 
-    genres: [Genre!]!
+    genres: [Genre]!
+    prompts: [Prompt]! @belongsToMany,
 }
 
 extend type Query {

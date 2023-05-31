@@ -7,6 +7,6 @@ type Genre {
 }
 
 extend type Query {
-    genres(ids: [ID] @in(key: "id")): [Genre!]! @paginate(defaultCount: 50),
+    genres(ids: [ID] @in(key: "id")): [Genre]! @paginate(defaultCount: 50),
     genre(id: ID! @eq): Genre @find
 }
