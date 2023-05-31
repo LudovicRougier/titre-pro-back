@@ -1,0 +1,16 @@
+type Movie {
+    id: ID!,
+    title: String!,
+    tmdb_api_id: String!,
+    synopsis: String,
+    medias: JSON!,
+    created_at: DateTime!,
+    updated_at: DateTime
+
+    genres: [Genre]!
+}
+
+extend type Query {
+    # movies(ids: [ID] @in(key: "id")): [Movie!]! @paginate(defaultCount: 50),
+    movie(id: ID! @eq): Movie @find
+}
