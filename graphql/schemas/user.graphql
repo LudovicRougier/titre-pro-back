@@ -1,0 +1,19 @@
+type User {
+    id: ID!,
+    name: String!,
+    age: Int!,
+    country: String! @field(resolver: "App\\Graphql\\UserResolver@country"),
+    gender: String @field(resolver: "App\\Graphql\\UserResolver@gender"),
+    description: String,
+    email: String,
+    created_at: DateTime!,
+    updated_at: DateTime,
+    deleted_at: DateTime
+
+    genres: [Genre]!
+    prompts: [Prompt]! @belongsToMany,
+}
+
+extend type Query {
+    user(id: ID! @eq): User @find
+}

@@ -1,0 +1,28 @@
+type Prompt {
+    id: ID
+    user_input: String!
+    custom_answer: String!
+    is_positive: Boolean
+    created_at: DateTime!
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    mainEmotion: Emotion
+    subEmotion: Emotion
+    user: User
+    movies: [Movie!]!
+}
+
+extend type Query {
+    prompt(id: ID! @eq): Prompt @find
+}
+
+type Mutation {
+  createPrompt(input: UserInput!): Prompt
+}
+
+input UserInput {
+  user_input: String!,
+  is_personnalized: Boolean,
+  is_opposite: Boolean,
+}
