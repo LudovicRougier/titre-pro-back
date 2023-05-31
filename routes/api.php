@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+Route::get('/test', function() {
+    return response()->json([
+        'message' => 'Bonjour',
+    ]);
+});
 
 Route::middleware('auth:api')->group( function () {
     Route::get('/refresh', [AuthController::class, 'refresh'])->name('refresh_token');
