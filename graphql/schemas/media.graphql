@@ -1,0 +1,12 @@
+type Media {
+    title: String!,
+    overview: String,
+    backdrop_path: String,
+    poster_path: String,
+    runtime: Int,
+    directors: [People]!,
+    actors: [People]!,
+    genres: [Genre]!
+}
+
+

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Prompt extends Model
 {
@@ -17,6 +16,9 @@ class Prompt extends Model
         'user_input',
         'custom_answer',
         'is_positive',
+        'language',
+        'movies_related_to_emotions',
+        'movies_related_to_topic',
         'main_emotion_id',
         'sub_emotion_id',
         'user_id',
@@ -28,7 +30,8 @@ class Prompt extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'medias' => 'array',
+        'movies_related_to_emotions' => 'array',
+        'movies_related_to_topic' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -44,10 +47,5 @@ class Prompt extends Model
     public function subEmotion(): BelongsTo
     {
         return $this->belongsTo(Emotion::class);
-    }
-
-    public function movies(): BelongsToMany
-    {
-        return $this->belongsToMany(Movie::class);
     }
 }
