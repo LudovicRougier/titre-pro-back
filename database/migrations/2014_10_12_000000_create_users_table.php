@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('gender', array_column(GenderEnum::cases(), 'value'))->nullable();
             $table->string('description')->nullable();
             $table->string('email')->unique();
+            $table->json('wanted_genres')->nullable();
+            $table->json('unwanted_genres')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

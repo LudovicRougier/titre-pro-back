@@ -53,7 +53,7 @@ services:
         image: adminer
         restart: always
         environment:
-            - ADMINER_DESIGN=hydra
+            - ADMINER_DESIGN=ng9
         ports:
             - 8082:8080
         networks:
