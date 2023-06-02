@@ -1,12 +1,3 @@
 type Genre {
-    id: ID!,
-    name: String!,
-    tmdb_api_id: String!,
-    created_at: DateTime!,
-    updated_at: DateTime
-}
-
-extend type Query {
-    genres(ids: [ID] @in(key: "id")): [Genre]! @paginate(defaultCount: 50),
-    genre(id: ID! @eq): Genre @find
+    name: String,
 }

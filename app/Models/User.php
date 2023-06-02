@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -27,7 +26,11 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'country',
+        'gender',
         'age',
+        'description',
+        'unwanted_genres',
+        'wanted_genres',
     ];
 
     /**
@@ -49,6 +52,8 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'country' => CountryEnum::class,
         'gender' => GenderEnum::class,
+        'wanted_genres' => 'array',
+        'unwanted_genres' => 'array',
     ];
 
     public function setPasswordAttribute($value) {
@@ -74,11 +79,6 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    public function genres(): BelongsToMany
-    {
-        return $this->belongsToMany(Genre::class);
     }
 
     public function prompts(): HasMany

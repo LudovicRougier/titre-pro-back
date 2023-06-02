@@ -3,14 +3,15 @@ type Prompt {
     user_input: String!
     custom_answer: String!
     is_positive: Boolean
-    created_at: DateTime!
+    created_at: DateTime
     updated_at: DateTime
     deleted_at: DateTime
 
     mainEmotion: Emotion
     subEmotion: Emotion
     user: User
-    movies: [Movie!]!
+    movies_related_to_emotions: [Media]!,
+    movies_related_to_topic: [Media]!,
 }
 
 extend type Query {
@@ -19,6 +20,7 @@ extend type Query {
 
 type Mutation {
   createPrompt(input: UserInput!): Prompt
+  createPromptTest(input: UserInput!): Prompt
 }
 
 input UserInput {

@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('user_input');
             $table->text('custom_answer');
             $table->boolean('is_positive')->nullable();
+            $table->string('language');
+            $table->json('movies_related_to_emotions')->nullable();
+            $table->json('movies_related_to_topic')->nullable();
             $table->timestamps();
             $table->dateTime('deleted_at')->nullable();
             $table->unsignedBigInteger('main_emotion_id')->nullable();
