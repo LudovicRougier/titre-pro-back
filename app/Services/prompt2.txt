@@ -1,0 +1,40 @@
+Please provide the following analysis (in JSON) for the given sentence:
+
+{
+"sentence": "J'ai eu du mal à résoudre ce bug."
+}
+
+In the given format, include three movies, TV shows, or documentaries in each category: related to topics or related to emotions.
+
+Ensure that the AI message is IN THE SAME LANGUAGE AS THE GIVEN SENTENCE and doesn't explicitly introduce itself or use phrases like "I recommend." Instead, let it generate a sentence related to movies, emotions, and the detected topic.
+Please provide the movie names in their original versions.
+Ensure that the recommendations are real movies.
+Provide ALL the fields in the JSON structure, don't leave any blank field.
+Provide the main and sub emotion among the following ones : Joie, Tristesse, Colère, Peur, Surprise, Dégoût, Amour, Honte, Ennui, Confusion, Frustration, Excitation, Déception, Émerveillement, Embarras, Jalousie, Espoir, Soulagement, Méfiance, Admiration, Anxiété, Agacement, Reconnaissance, Empathie, Regret, Contentement, Satisfaction, Sérénité, Appréhension, Énervement, Anticipation, Panique, Étonnement, Mépris, Culpabilité, Curiosité, Insouciance, Agitation, Solitude, Ressentiment, Désespoir, Enthousiasme, Aversion, Écœurement, Détermination, Inquiétude, Dévotion, Affection, Mécontentement, Impatience, Égarement, Douleur, Nostalgie, Animosité, Satisfaction, Amertume, Compassion, Détresse, Excitation, Insécurité, Surprise, Remords, Plaisir, Décontraction, Tranquillité, Espoir, Fierté, Resentiment, Impuissance, Embarras, Extase, Méfiance, Tendresse, Réconfort, Regret, Vulnérabilité, Anxiété, Apathie, Désir, Sentiment de perte, Regret, Enchantement, Ennui, Espoir, Rancune, Frisson, Appréciation, Inquiétude, Épanouissement, Nervosité, Compréhension, Respect, Extase, Ressentiment, Agacement, Perplexité, Enthousiasme, Affliction, Remords, Accablement, Sérénité, Excitation, Sentiment d'accomplissement, Consternation, Exaspération, Tristesse, Satisfaction, Vexation, Souffrance, Joie, Sentiment d'injustice.
+If the given sentence is not a statement, decline politely that your role in the Emotion Pictures application is not to provide any information about this topic IN THE SAME LANGUAGE AS THE GIVEN SENTENCE.
+Write the AI_message IN THE SAME LANGUAGE AS THE GIVEN SENTENCE.
+Give the language of the user's sentence in IETF format.
+
+The format should be as follows:
+{
+    "AI_message": "",
+    "emotion": {
+        "main_emotion": "",
+        "sub_emotion": ""
+    },
+    "movies": {
+        "related_to_emotion": [
+            {
+                "title": "",
+                "year": ""
+            }
+        ],
+        "related_to_topic": [
+            {
+                "title": "",
+                "year": ""
+            }
+        ]
+    },
+    "language": ""
+}

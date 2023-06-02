@@ -1,0 +1,52 @@
+The followings are variables.
+Based on $A and $B, you have to fill ALL the others variables, from $C to $L and place them in the formated JSON below.
+Your response HAVE TO BE the formated json filled.
+
+
+$A = Il fait beau, aujourd’hui
+$B = Joie, Tristesse, Colère, Peur, Surprise, Dégoût, Amour, Honte, Ennui, Confusion, Frustration, Excitation, Déception, Émerveillement, Embarras, Jalousie, Espoir, Soulagement, Méfiance, Admiration, Anxiété, Agacement, Reconnaissance, Empathie, Regret, Contentement, Satisfaction, Sérénité, Appréhension, Énervement, Anticipation, Panique, Étonnement, Mépris, Culpabilité, Curiosité, Insouciance, Agitation, Solitude, Ressentiment, Désespoir, Enthousiasme, Aversion, Écœurement, Détermination, Inquiétude, Dévotion, Affection, Mécontentement, Impatience, Égarement, Douleur, Nostalgie, Animosité, Satisfaction, Amertume, Compassion, Détresse, Excitation, Insécurité, Surprise, Remords, Plaisir, Décontraction, Tranquillité, Espoir, Fierté, Resentiment, Impuissance, Embarras, Extase, Méfiance, Tendresse, Réconfort, Regret, Vulnérabilité, Anxiété, Apathie, Désir, Sentiment de perte, Regret, Enchantement, Ennui, Espoir, Rancune, Frisson, Appréciation, Inquiétude, Épanouissement, Nervosité, Compréhension, Respect, Extase, Ressentiment, Agacement, Perplexité, Enthousiasme, Affliction, Remords, Accablement, Sérénité, Excitation, Sentiment d'accomplissement, Consternation, Exaspération, Tristesse, Satisfaction, Vexation, Souffrance, Joie, Sentiment d'injustice
+
+$D = Pick 1 emotion contained in $B that correspond the most to $A.
+$E = Pick 1 emotion contained in $B that correspond the most to $A but different from $D.
+
+$F = Give a first REAL movie or TV show ORIGINAL NAME related to $D and $E.
+$G = Give the release date of $F.
+
+$H = Give a second REAL movie or TV show ORIGINAL NAME related to $D and $E, DIFFERENT FROM $F.
+$I = Give the release date of $F.
+
+$J = Give a third REAL movie or TV show ORIGINAL NAME related to $D and $E, DIFFERENT FROM $F AND $H.
+$K = Give the release date of $F.
+
+$L = Give the language of $A in IETF format.
+
+$C = Give short message (1 or 2 sentences max) IN THE SAME LANGUAGE as $A by commenting $A, without introducing yourself and WITHOUT REPEATING $A.
+
+
+
+Formated JSON :
+
+{
+    "emotion": {
+        "main_emotion": "$D",
+        "sub_emotion": "$E"
+    },
+    "movies": {
+        "related_to_emotion": [
+            {
+                "title": "$F",
+                "year": "$G"
+            },
+            {
+                "title": "$H",
+                "year": "$I"
+            },
+            {
+                "title": "$J",
+                "year": "$K"
+            }
+        ],
+    },
+    "language": "$L",
+    "AI_message": "$C"
+}
