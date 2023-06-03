@@ -9,56 +9,97 @@ class OpenAIService
 {
     protected $user;
     protected $userInput;
+    protected $isPersonnalized;
+    protected $isOpposite;
     protected $prompt;
     protected $emotions;
 
-    public function __construct($user, $userInput)
+    public function __construct($user, $userInput, $isPersonnalized = false, $isOpposite = false)
     {
         $this->user = $user;
         $this->userInput = $userInput;
+        $this->isPersonnalized = $isPersonnalized;
+        $this->isOpposite = $isOpposite ? 'the opposite of ' : '';
         $this->emotions = implode(', ', Emotion::all('name')->pluck('name')->all());
-        $this->prompt = "Please provide the following analysis (in JSON) for the given sentence:
+        $this->prompt = 'Your are a tool which purpose is to analyze a given sentence and choose two emotions that correspond the most to this sentence among the given ones and translate them into the language of given sentence.
+        Then propose 3 movies or tv shows related to '.$this->isOpposite.'this emotions and 3 movies or tv shows related to the topic of the given sentence.
+        Finally you have to answer a short message to the given sentence.
 
-            {
-                '".$this->userInput."'
-            }
+        The given sentence is : '.$this->userInput.'
+        The given emotions are : '.$this->emotions.'
 
-            In the given format with 3 movies or TV Shows or documentary in each category (related to topics or related to this given emotions : ".$this->emotions.").
+        The followings are variables.
+        All words written in capital letters are very important.
+        Based on the given sentence and the given emotions, you have to fill ALL the others variables, from $A to $P and place them in the formated JSON below.
+        Your response HAVE TO BE the formated json filled.
 
-            And be sure to give a personalized message IN THE SAME LANGUAGE as the given sentence for the user by speaking to him and telling him about the movies you recommend. Without saying Hi or presenting yourself.
+        $A = Pick 1 emotion contained in the given emotions that correspond the most to the given sentence.
+        $B = Pick 1 emotion contained in the given emotions that correspond the most to the given sentence but different from $A.
 
-            GIVE THE MOVIE NAME IN ORIGINAL LANGUAGE.
-            DON'T GIVE FAKE RECOMMANDATIONS.
-            PROVIDE ALL THE JSON FIELDS, DON'T LEAVE EMPTY FIELDS, ESPECIALLY THE main_emotion AND THE sub_emotion fields.
-            ANSWER THE JSON ONLY DON'T CHANGE THE STRUCTURE.
+        $C = Give a first REAL movie or TV show ORIGINAL NAME related to '.$this->isOpposite.'$A and $B.
+        $D = Give the release date of $C.
 
-            Don't forget, the AI_message needs to be in the same language as the given sentence.
+        $E = Give a second REAL movie or TV show ORIGINAL NAME related to '.$this->isOpposite.'$A and $B, DIFFERENT FROM $C.
+        $F = Give the release date of $E.
 
-            Give the language of the given sentence in IETF format.
+        $G = Give a third REAL movie or TV show ORIGINAL NAME related to '.$this->isOpposite.'$A and $B, DIFFERENT FROM $C AND $E.
+        $H = Give the release date of $G.
 
-            Format :
-            {
-                \"AI_message\": \"\",
-                \"emotion\": {
-                    \"main_emotion\": \"\",
-                    \"sub_emotion\": \"\",
-                },
-                \"movies\": {
-                    \"related_to_emotion\": [
-                        {
-                            \"title\": \"\",
-                            \"year\": \"\"
-                        }
-                    ],
-                    \"related_to_topic\": [
-                        {
-                            \"title\": \"\",
-                            \"year\": \"\"
-                        }
-                    ]
-                },
-                \"language\": \"\"
-            }";
+        $I = Give a first REAL movie or TV show ORIGINAL NAME related to the topic of the given sentence.
+        $J = Give the release date of $I.
+
+        $K = Give a second REAL movie or TV show ORIGINAL NAME related to the topic of the given sentence, DIFFERENT FROM $C, $E, $G AND $I.
+        $L = Give the release date of $K.
+
+        $M = Give a third REAL movie or TV show ORIGINAL NAME related to the topic of the given sentence, DIFFERENT FROM $C, $E, $G, $I AND $K.
+        $N = Give the release date of $M.
+
+        $O = Give the language of the given sentence in IETF format.
+
+        $P = Generate a SHORT personalized and sophisticated sentence (30 words max) IN THE SAME LANGUAGE AS THE GIVEN SENTENCE related to movies WITHOUT NAMING THEM, emotions WITHOUT NAMING THEM NEITHER, and the detected topic.
+
+
+
+        Formated JSON :
+
+        {
+            "emotion": {
+                "main_emotion": "$A",
+                "sub_emotion": "$B"
+            },
+            "movies": {
+                "related_to_emotion": [
+                    {
+                        "title": "$C",
+                        "year": "$D"
+                    },
+                    {
+                        "title": "$E",
+                        "year": "$F"
+                    },
+                    {
+                        "title": "$G",
+                        "year": "$H"
+                    }
+                ],
+                "related_to_topic": [
+                    {
+                        "title": "$I",
+                        "year": "$J"
+                    },
+                    {
+                        "title": "$K",
+                        "year": "$L"
+                    },
+                    {
+                        "title": "$M",
+                        "year": "$N"
+                    }
+                ]
+            },
+            "language": "$O",
+            "AI_message": "$P"
+        }';
     }
 
     public function getOpenAIResponse()
@@ -76,7 +117,13 @@ class OpenAIService
             || !$response->choices
             || !$response->choices[0]->message
             || !$response->choices[0]->message->content
+            || !json_decode($response->choices[0]->message->content)
             || !json_decode($response->choices[0]->message->content)->movies
+            || !json_decode($response->choices[0]->message->content)->AI_message
+            || !json_decode($response->choices[0]->message->content)->language
+            || !json_decode($response->choices[0]->message->content)->emotion
+            || (empty(json_decode($response->choices[0]->message->content)->emotion->main_emotion)
+                && empty(json_decode($response->choices[0]->message->content)->emotion->sub_emotion))
             || (empty(json_decode($response->choices[0]->message->content)->movies->related_to_emotion)
                 && empty(json_decode($response->choices[0]->message->content)->movies->related_to_topic));
 

@@ -9,35 +9,43 @@ use Illuminate\Support\Facades\Http;
 
 class TMDBService
 {
+    protected $language;
+
+    public function __construct($language)
+    {
+        $this->language = $language;
+    }
+
     public function getMedia($media)
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
             'accept'        => 'application/json',
         ])
-        ->get('https://api.themoviedb.org/3/search/multi?query='.urlencode($media->title).'&include_adult=false&page=1&language=fr-FR
-        ')
+        ->get('https://api.themoviedb.org/3/search/multi?query='.urlencode($media->title).'&include_adult=false&page=1&language='.$this->language)
         ->body();
 
         $decodedResponse = collect(json_decode($response)->results);
 
-        return $decodedResponse->first(function (object $value) use ($media) {
-            if (isset($value->media_type)) {
-                if ($value->media_type === 'movie') {
-                    return !empty($value->release_date)
-                        ? str_contains($value->release_date, $media->year)
-                        : false;
+        return $decodedResponse->isEmpty()
+            ? null
+            : $decodedResponse->first(function (object $value) use ($media) {
+                if (isset($value->media_type)) {
+                    if ($value->media_type === 'movie') {
+                        return !empty($value->release_date)
+                            ? str_contains($value->release_date, $media->year)
+                            : false;
+                    }
+
+                    if ($value->media_type === 'tv') {
+                        return !empty($value->first_air_date)
+                            ? str_contains($value->first_air_date, $media->year)
+                            : false;
+                    }
                 }
 
-                if ($value->media_type === 'tv') {
-                    return !empty($value->first_air_date)
-                        ? str_contains($value->first_air_date, $media->year)
-                        : false;
-                }
-            }
-
-            return false;
-        });
+                return false;
+            });
     }
 
     public function getMediaDetails($media)
@@ -46,7 +54,7 @@ class TMDBService
             'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
             'accept'        => 'application/json',
         ])
-        ->get('https://api.themoviedb.org/3/'.$media->media_type.'/'.$media->id.'?language=fr-FR&append_to_response=credits')
+        ->get('https://api.themoviedb.org/3/'.$media->media_type.'/'.$media->id.'?language='.$this->language.'&append_to_response=credits')
         ->body();
 
         $detailedMedia = json_decode($response);
@@ -125,7 +133,12 @@ class TMDBService
 
         foreach($array as $openaiMedia) {
 
-            $media         = $this->getMedia($openaiMedia);
+            $media = $this->getMedia($openaiMedia);
+
+            if (!$media) {
+                continue;
+            }
+
             $detailedMedia = $this->getMediaDetails($media);
             $directors     = $this->getMediaDirectors($detailedMedia);
             $actors        = $this->getMediaActors($detailedMedia);
