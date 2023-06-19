@@ -1,4 +1,5 @@
 type Media {
+    id: ID,
     title: String!,
     overview: String,
     backdrop_path: String,

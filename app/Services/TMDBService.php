@@ -117,11 +117,30 @@ class TMDBService
 
         return collect($media->genres)->map(function($value) {
             $genre = new Genre([
+                'id'   => $value->id,
                 'name' => $value->name,
             ]);
 
             return $genre->toArray();
         })->toArray();
+    }
+
+    public function getMediaWatchProviders($media)
+    {
+        // dd(explode('-', $this->language), $this->language);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
+            'accept'        => 'application/json',
+        ])
+        ->get('https://api.themoviedb.org/3/'.$media->media_type.'/'.$media->id.'/watch/providers&watch_region='.strtoupper($this->language))
+        ->body();
+
+        $watchProviders = json_decode($response);
+
+        dd($watchProviders);
+        // $detailedMedia->media_type = $media->media_type;
+
+        // return $detailedMedia;
     }
 
     public function getMedias($openaiResponse, $isEmotion)
@@ -139,25 +158,27 @@ class TMDBService
                 continue;
             }
 
-            $detailedMedia = $this->getMediaDetails($media);
-            $directors     = $this->getMediaDirectors($detailedMedia);
-            $actors        = $this->getMediaActors($detailedMedia);
-            $genres        = $this->getMediaGenres($detailedMedia);
+            $detailedMedia  = $this->getMediaDetails($media);
+            $directors      = $this->getMediaDirectors($detailedMedia);
+            $actors         = $this->getMediaActors($detailedMedia);
+            $genres         = $this->getMediaGenres($detailedMedia);
+            $watchProviders = $this->getMediaWatchProviders($detailedMedia);
 
             $mediaModel = new Media([
-                'id'            => $detailedMedia->id,
-                'title'         => $detailedMedia->media_type === 'tv'
+                'id'             => $detailedMedia->id,
+                'title'          => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->original_name
                     : $detailedMedia->original_title,
-                'overview'      => $detailedMedia->overview,
-                'backdrop_path' => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->backdrop_path,
-                'poster_path'   => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->poster_path,
-                'runtime'       => $detailedMedia->media_type === 'tv'
+                'overview'       => $detailedMedia->overview,
+                'backdrop_path'  => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->backdrop_path,
+                'poster_path'    => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->poster_path,
+                'runtime'        => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->episode_run_time
                     : $detailedMedia->runtime,
-                'directors'     => $directors,
-                'actors'        => $actors,
-                'genres'        => $genres,
+                'directors'      => $directors,
+                'actors'         => $actors,
+                'genres'         => $genres,
+                'watchProviders' => $watchProviders,
             ]);
 
             $medias[] = $mediaModel->toArray();
