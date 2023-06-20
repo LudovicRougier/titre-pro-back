@@ -17,12 +17,12 @@ type Prompt {
 }
 
 extend type Query {
-    prompt(id: ID! @eq): Prompt @find
+    prompts: [Prompt!] @paginate(defaultCount: 10) @whereAuth(relation: "user")
+    # prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
 }
 
 type Mutation {
   createPrompt(input: UserInput!): Prompt
-  createPromptTest(input: UserInput!): Prompt
 }
 
 input UserInput {

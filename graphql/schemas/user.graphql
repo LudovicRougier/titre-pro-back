@@ -15,5 +15,5 @@ type User @guard {
 }
 
 extend type Query {
-    user(id: ID! @eq): User @find
+    me: User @auth(guards: ["api"])
 }
