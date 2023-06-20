@@ -1,4 +1,4 @@
 type Genre {
-    id: String,
-    name: String,
+    id: ID
+    name: String
 }

@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Genre;
-use App\Models\Media;
-use App\Models\People;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class TMDBService
@@ -74,13 +72,11 @@ class TMDBService
                 return $value->job === ($media->media_type === 'tv' ? 'Producer' : 'Director');
             })
             ->map(function($value) {
-                $people = new People([
+                return [
                     'id'              => $value->id,
                     'name'            => $value->name ?? $value->original_name,
                     'profile_picture' => 'https://image.tmdb.org/t/p/original/'.$value->profile_path,
-                ]);
-
-                return $people->toArray();
+                ];
             });
 
         return $directors->count() > 10
@@ -95,13 +91,11 @@ class TMDBService
         }
 
         $actors = collect($media->credits->cast)->map(function($value) {
-            $people = new People([
+            return [
                 'id'              => $value->id,
                 'name'            => $value->name ?? $value->original_name,
                 'profile_picture' => 'https://image.tmdb.org/t/p/original/'.$value->profile_path,
-            ]);
-
-            return $people->toArray();
+            ];
         });
 
         return $actors->count() > 10
@@ -116,31 +110,37 @@ class TMDBService
         }
 
         return collect($media->genres)->map(function($value) {
-            $genre = new Genre([
+            return [
                 'id'   => $value->id,
                 'name' => $value->name,
-            ]);
-
-            return $genre->toArray();
+            ];
         })->toArray();
     }
 
     public function getMediaWatchProviders($media)
     {
-        // dd(explode('-', $this->language), $this->language);
+        $language = explode('-', $this->language)[1] ?? null;
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
             'accept'        => 'application/json',
         ])
-        ->get('https://api.themoviedb.org/3/'.$media->media_type.'/'.$media->id.'/watch/providers&watch_region='.strtoupper($this->language))
+        ->get('https://api.themoviedb.org/3/'.$media->media_type.'/'.$media->id.'/watch/providers')
         ->body();
 
-        $watchProviders = json_decode($response);
+        $watchProviders = json_decode($response, true)['results'];
 
-        dd($watchProviders);
-        // $detailedMedia->media_type = $media->media_type;
+        if (!$language || !isset($watchProviders[$language])) {
+            return null;
+        }
 
-        // return $detailedMedia;
+        $watchProviders = $watchProviders[$language];
+
+        return [
+            'buy'      => $watchProviders['buy'] ?? null,
+            'rent'     => $watchProviders['rent'] ?? null,
+            'flatrate' => $watchProviders['flatrate'] ?? null,
+        ];
     }
 
     public function getMedias($openaiResponse, $isEmotion)
@@ -162,26 +162,31 @@ class TMDBService
             $directors      = $this->getMediaDirectors($detailedMedia);
             $actors         = $this->getMediaActors($detailedMedia);
             $genres         = $this->getMediaGenres($detailedMedia);
-            $watchProviders = $this->getMediaWatchProviders($detailedMedia);
+            $watchProviders = Auth::user()
+                ? $this->getMediaWatchProviders($detailedMedia)
+                : null;
 
-            $mediaModel = new Media([
-                'id'             => $detailedMedia->id,
-                'title'          => $detailedMedia->media_type === 'tv'
+            $medias[] = [
+                'id'              => $detailedMedia->id,
+                'title'           => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->original_name
                     : $detailedMedia->original_title,
-                'overview'       => $detailedMedia->overview,
-                'backdrop_path'  => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->backdrop_path,
-                'poster_path'    => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->poster_path,
-                'runtime'        => $detailedMedia->media_type === 'tv'
+                'type'            => $detailedMedia->media_type,
+                'overview'        => $detailedMedia->overview,
+                'backdrop_path'   => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->backdrop_path,
+                'poster_path'     => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->poster_path,
+                'release_date'    => $detailedMedia->media_type === 'tv'
+                    ? $detailedMedia->first_air_date
+                    : $detailedMedia->release_date,
+                'runtime'         => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->episode_run_time
                     : $detailedMedia->runtime,
-                'directors'      => $directors,
-                'actors'         => $actors,
-                'genres'         => $genres,
-                'watchProviders' => $watchProviders,
-            ]);
-
-            $medias[] = $mediaModel->toArray();
+                'vote_average'    => $detailedMedia->vote_average * 1000,
+                'directors'       => $directors,
+                'actors'          => $actors,
+                'genres'          => $genres,
+                'watch_providers' => $watchProviders,
+            ];
         }
 
         return $medias;

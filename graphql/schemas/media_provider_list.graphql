@@ -1,0 +1,5 @@
+type MediaProviderList {
+    rent: [MediaProvider!]
+    buy: [MediaProvider!]
+    flatrate: [MediaProvider!]
+}

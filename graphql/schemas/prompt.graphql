@@ -6,6 +6,8 @@ type Prompt {
     created_at: DateTime
     updated_at: DateTime
     deleted_at: DateTime
+    main_emotion_translation: String
+    sub_emotion_translation: String
 
     mainEmotion: Emotion
     subEmotion: Emotion
