@@ -18,14 +18,14 @@ type Prompt {
 
 extend type Query {
     prompts: [Prompt!] @paginate(defaultCount: 10) @whereAuth(relation: "user")
-    # prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
+    prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
 }
 
 type Mutation {
-  createPrompt(input: UserInput!): Prompt
+  createPrompt(input: PromptInput!): Prompt
 }
 
-input UserInput {
+input PromptInput {
   user_input: String!
   is_personnalized: Boolean
   is_opposite: Boolean

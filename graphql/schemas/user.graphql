@@ -6,14 +6,34 @@ type User @guard {
     gender: String @field(resolver: "App\\Graphql\\UserResolver@gender")
     description: String
     email: String
-    created_at: DateTime!
-    updated_at: DateTime
-    deleted_at: DateTime
+    # created_at: DateTime!
+    # updated_at: DateTime
+    # deleted_at: DateTime
 
-    genres: [Genre]!
+    wanted_watch_providers: MediaProviderList
+    wanted_genres: [Genre]
+    unwanted_genres: [Genre]
     prompts: [Prompt]! @belongsToMany
 }
 
 extend type Query {
     me: User @auth(guards: ["api"])
+}
+
+type Mutation {
+  updateMe(input: UserInput!): JSON!
+}
+
+input UserInput {
+    name: String
+    age: Int
+    country: String
+    gender: String
+    description: String
+    email: String
+    password: String @hash
+
+    wanted_watch_providers: MediaProviderListInput
+    wanted_genres: [GenreInput!]
+    unwanted_genres: [GenreInput!]
 }

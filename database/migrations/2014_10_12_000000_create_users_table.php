@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->json('wanted_genres')->nullable();
             $table->json('unwanted_genres')->nullable();
+            $table->json('rent')->nullable();
+            $table->json('buy')->nullable();
+            $table->json('flatrate')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

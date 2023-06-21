@@ -29,6 +29,9 @@ class User extends Authenticatable implements JWTSubject
         'gender',
         'age',
         'description',
+        'rent',
+        'buy',
+        'flatrate',
         'unwanted_genres',
         'wanted_genres',
     ];
@@ -52,6 +55,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'country' => CountryEnum::class,
         'gender' => GenderEnum::class,
+        'rent' => 'array',
+        'buy' => 'array',
+        'flatrate' => 'array',
         'wanted_genres' => 'array',
         'unwanted_genres' => 'array',
     ];

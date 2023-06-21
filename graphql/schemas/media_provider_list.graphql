@@ -3,3 +3,9 @@ type MediaProviderList {
     buy: [MediaProvider!]
     flatrate: [MediaProvider!]
 }
+
+input MediaProviderListInput {
+    rent: [MediaProviderInput!]
+    buy: [MediaProviderInput!]
+    flatrate: [MediaProviderInput!]
+}

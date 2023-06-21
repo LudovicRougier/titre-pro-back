@@ -27,7 +27,7 @@ final class Login
         }
 
         return [
-            'user' => [Auth::user()],
+            'user' => Auth::user(),
             'authorization' => [
                     'token' => $token,
                     'type' => 'bearer',

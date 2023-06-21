@@ -14,6 +14,11 @@ class TMDBService
         $this->language = $language;
     }
 
+    public function getAllGenres()
+    {
+
+    }
+
     public function getMedia($media)
     {
         $response = Http::withHeaders([

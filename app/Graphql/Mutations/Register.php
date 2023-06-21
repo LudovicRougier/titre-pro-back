@@ -21,16 +21,18 @@ final class Register
 
         if ($validator->fails()) {
             return [
-                'status' => 401,
-                'errors' => $validator->errors(),
+                'status'  => 401,
+                'success' => false,
+                'errors'  => $validator->errors(),
             ];
         }
 
         $user = User::create($validator->getData());
 
         return [
-            'status' => 201,
-            'errors' => $user,
+            'status'  => 201,
+            'success' => true,
+            'user'    => $user,
         ];
     }
 }

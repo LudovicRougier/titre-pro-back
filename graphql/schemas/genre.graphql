@@ -1,4 +1,13 @@
 type Genre {
-    id: ID
+    id: ID!
+    name: String
+}
+
+extend type Query {
+    genres: [Genre!] @auth @all(resolver: "App\\Graphql\\GenreResolver@getAll")
+}
+
+input GenreInput {
+    id: ID!
     name: String
 }
