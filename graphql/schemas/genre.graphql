@@ -3,8 +3,8 @@ type Genre {
     name: String
 }
 
-extend type Query {
-    genres: [Genre!] @auth @all(resolver: "App\\Graphql\\GenreResolver@getAll")
+type Query {
+    genres: [Genre!]
 }
 
 input GenreInput {

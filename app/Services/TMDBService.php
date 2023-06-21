@@ -16,7 +16,26 @@ class TMDBService
 
     public function getAllGenres()
     {
+        $genres = collect([]);
 
+        foreach (['tv', 'movie'] as $type) {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
+                'accept'        => 'application/json',
+            ])
+            ->get('https://api.themoviedb.org/3/genre/'.$type.'/list?language='.$this->language)
+            ->body();
+
+            $decodedResponse = collect(json_decode($response)->genres);
+
+            $genresArray = $genres->pluck('name')->all();
+
+            $decodedResponse->map(function ($value) use ($genresArray, $genres) {
+                in_array($value->name, $genresArray) ?: $genres->push($value);
+            });
+        }
+
+        return $genres->sortBy('name')->toArray();
     }
 
     public function getMedia($media)
