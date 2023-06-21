@@ -21,7 +21,7 @@ extend type Query {
     prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
 }
 
-type Mutation {
+extend type Mutation {
   createPrompt(input: PromptInput!): Prompt
 }
 

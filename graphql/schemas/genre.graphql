@@ -3,8 +3,8 @@ type Genre {
     name: String
 }
 
-type Query {
-    genres: [Genre!]
+extend type Query {
+    genres: [Genre!] @guard
 }
 
 input GenreInput {

@@ -14,28 +14,42 @@ class TMDBService
         $this->language = $language;
     }
 
-    public function getAllGenres()
+    public function getItems($name)
     {
-        $genres = collect([]);
+        if ($name === 'genres') {
+            $url         = 'https://api.themoviedb.org/3/genre/';
+            $params      = '/list?language='.$this->language;
+            $pluckField  = 'name';
+            $resProperty = 'genres';
+        }
+
+        if ($name === 'media_providers') {
+            $url         = 'https://api.themoviedb.org/3/watch/providers/';
+            $params      = '?watch_region='.$this->language;
+            $pluckField  = 'provider_name';
+            $resProperty = 'results';
+        }
+
+        $items = collect([]);
 
         foreach (['tv', 'movie'] as $type) {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer '.env('TMDB_API_TOKEN'),
                 'accept'        => 'application/json',
             ])
-            ->get('https://api.themoviedb.org/3/genre/'.$type.'/list?language='.$this->language)
+            ->get($url.$type.$params)
             ->body();
 
-            $decodedResponse = collect(json_decode($response)->genres);
+            $decodedResponse = collect(json_decode($response)->$resProperty);
 
-            $genresArray = $genres->pluck('name')->all();
+            $itemsArray = $items->pluck($pluckField)->all();
 
-            $decodedResponse->map(function ($value) use ($genresArray, $genres) {
-                in_array($value->name, $genresArray) ?: $genres->push($value);
+            $decodedResponse->map(function ($value) use ($itemsArray, $items, $pluckField) {
+                in_array($value->$pluckField, $itemsArray) ?: $items->push($value);
             });
         }
 
-        return $genres->sortBy('name')->toArray();
+        return $items->sortBy($pluckField)->toArray();
     }
 
     public function getMedia($media)
