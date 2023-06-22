@@ -113,7 +113,7 @@ class TMDBService
                 return [
                     'id'              => $value->id,
                     'name'            => $value->name ?? $value->original_name,
-                    'profile_picture' => 'https://image.tmdb.org/t/p/original/'.$value->profile_path,
+                    'profile_picture' => $value->profile_path,
                 ];
             });
 
@@ -132,7 +132,7 @@ class TMDBService
             return [
                 'id'              => $value->id,
                 'name'            => $value->name ?? $value->original_name,
-                'profile_picture' => 'https://image.tmdb.org/t/p/original/'.$value->profile_path,
+                'profile_picture' => $value->profile_path,
             ];
         });
 
@@ -211,8 +211,8 @@ class TMDBService
                     : $detailedMedia->original_title,
                 'type'            => $detailedMedia->media_type,
                 'overview'        => $detailedMedia->overview,
-                'backdrop_path'   => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->backdrop_path,
-                'poster_path'     => 'https://image.tmdb.org/t/p/original/'.$detailedMedia->poster_path,
+                'backdrop_path'   => $detailedMedia->backdrop_path,
+                'poster_path'     => $detailedMedia->poster_path,
                 'release_date'    => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->first_air_date
                     : $detailedMedia->release_date,

@@ -5,6 +5,10 @@ type MediaProvider {
     display_priority: Int
 }
 
+extend type Query {
+    mediaProviders: [MediaProvider!] @guard
+}
+
 input MediaProviderInput {
     provider_id: ID!
     logo_path: String

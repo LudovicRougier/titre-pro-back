@@ -37,6 +37,7 @@ final class UpdateMe
         }
 
         $user->update($validator->getData());
+        $user->save();
 
         return [
             'status'  => 200,
