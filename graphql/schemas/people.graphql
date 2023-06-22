@@ -1,4 +1,5 @@
 type People {
-    name: String!,
-    profile_picture: String,
+    id: ID!
+    name: String!
+    profile_picture: String
 }

@@ -17,6 +17,8 @@ class Prompt extends Model
         'custom_answer',
         'is_positive',
         'language',
+        'main_emotion_translation',
+        'sub_emotion_translation',
         'movies_related_to_emotions',
         'movies_related_to_topic',
         'main_emotion_id',

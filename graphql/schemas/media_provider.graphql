@@ -1,0 +1,13 @@
+type MediaProvider {
+    provider_id: ID!
+    logo_path: String
+    provider_name: String
+    display_priority: Int
+}
+
+input MediaProviderInput {
+    provider_id: ID!
+    logo_path: String
+    provider_name: String
+    display_priority: Int
+}

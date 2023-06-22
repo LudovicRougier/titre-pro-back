@@ -6,25 +6,32 @@ type Prompt {
     created_at: DateTime
     updated_at: DateTime
     deleted_at: DateTime
+    main_emotion_translation: String
+    sub_emotion_translation: String
 
     mainEmotion: Emotion
     subEmotion: Emotion
     user: User
-    movies_related_to_emotions: [Media]!,
-    movies_related_to_topic: [Media]!,
+    movies_related_to_emotions: [Media]!
+    movies_related_to_topic: [Media]!
 }
 
 extend type Query {
-    prompt(id: ID! @eq): Prompt @find
+    prompts(created_at: DateRange @whereBetween): [Prompt!] @paginate(defaultCount: 10) @whereAuth(relation: "user")
+    prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
 }
 
-type Mutation {
-  createPrompt(input: UserInput!): Prompt
-  createPromptTest(input: UserInput!): Prompt
+extend type Mutation {
+  createPrompt(input: PromptInput!): Prompt
 }
 
-input UserInput {
-  user_input: String!,
-  is_personnalized: Boolean,
-  is_opposite: Boolean,
+input PromptInput {
+  user_input: String!
+  is_personnalized: Boolean = false
+  is_opposite: Boolean = false
+}
+
+input DateRange {
+  from: DateTime!
+  to: DateTime!
 }

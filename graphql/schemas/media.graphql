@@ -1,12 +1,16 @@
 type Media {
-    title: String!,
-    overview: String,
-    backdrop_path: String,
-    poster_path: String,
-    runtime: Int,
-    directors: [People]!,
-    actors: [People]!,
+    id: ID
+    title: String!
+    overview: String
+    backdrop_path: String
+    poster_path: String
+    release_date: Date
+    runtime: Int
+    vote_average: Int
+    directors: [People]!
+    actors: [People]!
     genres: [Genre]!
+    watch_providers: MediaProviderList
 }
 
 

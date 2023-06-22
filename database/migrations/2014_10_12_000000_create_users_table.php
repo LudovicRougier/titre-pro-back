@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->json('wanted_genres')->nullable();
             $table->json('unwanted_genres')->nullable();
+            $table->json('wanted_watch_providers')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

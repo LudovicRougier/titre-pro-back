@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('custom_answer');
             $table->boolean('is_positive')->nullable();
             $table->string('language');
+            $table->string('main_emotion_translation');
+            $table->string('sub_emotion_translation');
             $table->json('movies_related_to_emotions')->nullable();
             $table->json('movies_related_to_topic')->nullable();
             $table->timestamps();
