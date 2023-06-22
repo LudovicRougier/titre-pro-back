@@ -27,6 +27,6 @@ extend type Mutation {
 
 input PromptInput {
   user_input: String!
-  is_personnalized: Boolean
-  is_opposite: Boolean
+  is_personnalized: Boolean = false
+  is_opposite: Boolean = false
 }

@@ -29,6 +29,13 @@ final class UpdateMe
             ];
         }
 
+        if (isset($validator->getData()['new_password'])) {
+            $validator->setData([
+                ...$validator->getData(),
+                'password' => $validator->getData()['new_password']
+            ]);
+        }
+
         $user->update($validator->getData());
 
         return [

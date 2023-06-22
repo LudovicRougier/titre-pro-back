@@ -31,7 +31,8 @@ input UserInput {
     gender: String
     description: String
     email: String
-    password: String @hash
+    current_password: String
+    new_password: String
 
     wanted_watch_providers: MediaProviderListInput
     wanted_genres: [GenreInput!]
