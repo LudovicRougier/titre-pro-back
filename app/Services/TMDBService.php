@@ -213,8 +213,8 @@ class TMDBService
             $medias[] = [
                 'id'              => $detailedMedia->id,
                 'title'           => $detailedMedia->media_type === 'tv'
-                    ? $detailedMedia->original_name
-                    : $detailedMedia->original_title,
+                    ? $detailedMedia->name
+                    : $detailedMedia->title,
                 'type'            => $detailedMedia->media_type,
                 'overview'        => $detailedMedia->overview,
                 'backdrop_path'   => $detailedMedia->backdrop_path,
