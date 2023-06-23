@@ -21,12 +21,11 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => 'test@test.com',
-            'email_verified_at' => now(),
             'age' => rand(15, 100),
             'country' => CountryEnum::cases()[array_rand(CountryEnum::cases())]->value,
+            'gender' => 'Non Renseigné',
             // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'password' => 'MyPassword1!',
-            'remember_token' => Str::random(10),
         ];
     }
 

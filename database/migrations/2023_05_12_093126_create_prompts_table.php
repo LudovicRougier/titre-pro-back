@@ -13,21 +13,19 @@ return new class extends Migration
     {
         Schema::create('prompts', function (Blueprint $table) {
             $table->id();
-            $table->string('user_input');
-            $table->text('custom_answer');
-            $table->boolean('is_positive')->nullable();
-            $table->string('language');
-            $table->string('main_emotion_translation');
-            $table->string('sub_emotion_translation');
-            $table->json('movies_related_to_emotions')->nullable();
-            $table->json('movies_related_to_topic')->nullable();
-            $table->timestamps();
+            $table->longText('user_input');
+            $table->longText('custom_answer');
+            $table->longText('is_positive');
+            $table->longText('language');
+            $table->longText('main_emotion_translation');
+            $table->longText('sub_emotion_translation');
+            $table->longText('movies_related_to_emotions');
+            $table->longText('movies_related_to_topic');
             $table->dateTime('deleted_at')->nullable();
-            $table->unsignedBigInteger('main_emotion_id')->nullable();
-            $table->unsignedBigInteger('sub_emotion_id')->nullable();
+            $table->longText('main_emotion_id');
+            $table->longText('sub_emotion_id');
 
-            $table->foreign('main_emotion_id')->references('id')->on('emotions');
-            $table->foreign('sub_emotion_id')->references('id')->on('emotions');
+            $table->timestamps();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }

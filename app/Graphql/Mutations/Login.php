@@ -14,20 +14,23 @@ final class Login
     public function __invoke($_, array $args): array
     {
         $validator = Validator::make($args, [
-            'email' => 'required|string|email|exists:users,email',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
         $token = Auth::attempt($validator->getData());
 
         if ($validator->fails() || !$token) {
-            return response()->json([
+            return [
+                'status'  => 401,
+                'success' => false,
                 'message' => 'Unauthorized',
-            ], 401);
+            ];
         }
 
         return [
-            'user' => Auth::user(),
+            'success'       => true,
+            'user'          => Auth::user(),
             'authorization' => [
                     'token' => $token,
                     'type' => 'bearer',

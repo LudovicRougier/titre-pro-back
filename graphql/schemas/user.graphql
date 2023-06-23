@@ -6,11 +6,8 @@ type User @guard {
     gender: String @field(resolver: "App\\Graphql\\UserResolver@gender")
     description: String
     email: String
-    # created_at: DateTime!
-    # updated_at: DateTime
-    # deleted_at: DateTime
 
-    wanted_watch_providers: MediaProviderList
+    wanted_watch_providers: [MediaProvider!]
     wanted_genres: [Genre]
     unwanted_genres: [Genre]
     prompts: [Prompt]! @belongsToMany
@@ -34,7 +31,7 @@ input UserInput {
     current_password: String
     new_password: String
 
-    wanted_watch_providers: MediaProviderListInput
+    wanted_watch_providers: [MediaProviderInput!]
     wanted_genres: [GenreInput!]
     unwanted_genres: [GenreInput!]
 }
