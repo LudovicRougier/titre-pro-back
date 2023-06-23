@@ -14,16 +14,6 @@ class Prompt extends Model implements CipherSweetEncrypted
 {
     use UsesCipherSweet, SoftDeletes;
 
-
-    protected $attributes = [
-        'is_positive' => '',
-        'movies_related_to_emotions' => '',
-        'movies_related_to_topic' => '',
-        'main_emotion_id' => '',
-        'sub_emotion_id' => '',
-    ];
-
-
     /**
      * The attributes that are mass assignable.
      *

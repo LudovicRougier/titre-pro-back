@@ -19,12 +19,12 @@ return new class extends Migration
             $table->longText('name');
             $table->longText('age');
             $table->longText('country');
-            $table->longText('gender');
-            $table->longText('description');
+            $table->longText('gender')->nullable();
+            $table->longText('description')->nullable();
             $table->string('email')->unique();
-            $table->longText('wanted_genres');
-            $table->longText('unwanted_genres');
-            $table->longText('wanted_watch_providers');
+            $table->longText('wanted_genres')->nullable();
+            $table->longText('unwanted_genres')->nullable();
+            $table->longText('wanted_watch_providers')->nullable();
             $table->string('password');
             $table->timestamps();
             $table->softDeletes();

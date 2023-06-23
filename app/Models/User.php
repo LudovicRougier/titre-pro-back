@@ -21,14 +21,6 @@ class User extends Model implements JWTSubject, CipherSweetEncrypted
 {
     use HasApiTokens, HasFactory, Notifiable, UsesCipherSweet, SoftDeletes;
 
-    protected $attributes = [
-        'gender' => 'Non Renseigné',
-        'description' => '',
-        'wanted_watch_providers' => '',
-        'unwanted_genres' => '',
-        'wanted_genres' => '',
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
