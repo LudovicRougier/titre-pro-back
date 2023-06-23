@@ -13,7 +13,6 @@ final class RefreshToken
     public function __invoke($_, array $args): array
     {
         return [
-            'user' => Auth::user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
