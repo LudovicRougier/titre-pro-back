@@ -6,22 +6,13 @@ use ParagonIE\CipherSweet\BlindIndex;
 use Illuminate\Database\Eloquent\Model;
 use ParagonIE\CipherSweet\EncryptedRow;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\LaravelCipherSweet\Concerns\UsesCipherSweet;
 use Spatie\LaravelCipherSweet\Contracts\CipherSweetEncrypted;
 
 class Prompt extends Model implements CipherSweetEncrypted
 {
-    use UsesCipherSweet;
-
-
-    protected $attributes = [
-        'is_positive' => '',
-        'movies_related_to_emotions' => '',
-        'movies_related_to_topic' => '',
-        'main_emotion_id' => '',
-        'sub_emotion_id' => '',
-    ];
-
+    use UsesCipherSweet, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

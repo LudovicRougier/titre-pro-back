@@ -17,21 +17,22 @@ type Prompt {
 }
 
 extend type Query {
-    prompts(created_at: DateRange @whereBetween): [Prompt!] @paginate(defaultCount: 10) @whereAuth(relation: "user")
+    prompts(created_at: DateRange @whereBetween): [Prompt!] @all @whereAuth(relation: "user")
     prompt(id: ID! @eq): Prompt @find @whereAuth(relation: "user")
 }
 
 extend type Mutation {
-  createPrompt(input: PromptInput!): Prompt
+    createPrompt(input: PromptInput!): Prompt
+    deletePrompt(id: ID! @whereKey): Prompt @delete @whereAuth(relation: "user")
 }
 
 input PromptInput {
-  user_input: String!
-  is_personnalized: Boolean = false
-  is_opposite: Boolean = false
+    user_input: String!
+    is_personnalized: Boolean = false
+    is_opposite: Boolean = false
 }
 
 input DateRange {
-  from: DateTime!
-  to: DateTime!
+    from: DateTime!
+    to: DateTime!
 }

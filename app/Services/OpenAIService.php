@@ -123,9 +123,15 @@ class OpenAIService
             || !$response->choices[0]->message->content
             || !json_decode($response->choices[0]->message->content)
             || !json_decode($response->choices[0]->message->content)->movies
+            || !json_decode($response->choices[0]->message->content)->movies->related_to_emotion
+            || !json_decode($response->choices[0]->message->content)->movies->related_to_topic
             || !json_decode($response->choices[0]->message->content)->AI_message
             || !json_decode($response->choices[0]->message->content)->language
             || !json_decode($response->choices[0]->message->content)->emotion
+            || !json_decode($response->choices[0]->message->content)->emotion->main_emotion
+            || !json_decode($response->choices[0]->message->content)->emotion->sub_emotion
+            || !json_decode($response->choices[0]->message->content)->emotion->main_emotion_translation
+            || !json_decode($response->choices[0]->message->content)->emotion->sub_emotion_translation
             || (empty(json_decode($response->choices[0]->message->content)->emotion->main_emotion)
                 && empty(json_decode($response->choices[0]->message->content)->emotion->sub_emotion))
             || (empty(json_decode($response->choices[0]->message->content)->movies->related_to_emotion)

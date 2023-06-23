@@ -15,17 +15,17 @@ return new class extends Migration
             $table->id();
             $table->longText('user_input');
             $table->longText('custom_answer');
-            $table->longText('is_positive');
+            $table->longText('is_positive')->nullable();
             $table->longText('language');
             $table->longText('main_emotion_translation');
             $table->longText('sub_emotion_translation');
-            $table->longText('movies_related_to_emotions');
-            $table->longText('movies_related_to_topic');
-            $table->dateTime('deleted_at')->nullable();
-            $table->longText('main_emotion_id');
-            $table->longText('sub_emotion_id');
+            $table->longText('movies_related_to_emotions')->nullable();
+            $table->longText('movies_related_to_topic')->nullable();
+            $table->longText('main_emotion_id')->nullable();
+            $table->longText('sub_emotion_id')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }

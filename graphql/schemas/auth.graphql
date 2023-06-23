@@ -1,6 +1,6 @@
 extend type Mutation {
   login(email: String!, password: String!): JSON!
   register(name: String!, email: String!, password: String!, country: String!, age: Int!): JSON!
-  refreshToken: JSON! @guard
+  refreshToken: JSON!
   logout: JSON! @guard
 }

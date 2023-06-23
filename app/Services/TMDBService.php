@@ -49,6 +49,12 @@ class TMDBService
             });
         }
 
+        if (empty($items->sortBy($pluckField)->toArray())) {
+            $this->language = 'US';
+
+            return $this->getItems($name);
+        }
+
         return $items->sortBy($pluckField)->toArray();
     }
 
@@ -207,8 +213,8 @@ class TMDBService
             $medias[] = [
                 'id'              => $detailedMedia->id,
                 'title'           => $detailedMedia->media_type === 'tv'
-                    ? $detailedMedia->original_name
-                    : $detailedMedia->original_title,
+                    ? $detailedMedia->name
+                    : $detailedMedia->title,
                 'type'            => $detailedMedia->media_type,
                 'overview'        => $detailedMedia->overview,
                 'backdrop_path'   => $detailedMedia->backdrop_path,
@@ -217,7 +223,7 @@ class TMDBService
                     ? $detailedMedia->first_air_date
                     : $detailedMedia->release_date,
                 'runtime'         => $detailedMedia->media_type === 'tv'
-                    ? $detailedMedia->episode_run_time
+                    ? $detailedMedia->last_episode_to_air->runtime
                     : $detailedMedia->runtime,
                 'vote_average'    => $detailedMedia->vote_average * 1000,
                 'directors'       => $directors,
