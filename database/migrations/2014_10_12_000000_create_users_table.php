@@ -27,7 +27,7 @@ return new class extends Migration
             $table->longText('wanted_watch_providers');
             $table->string('password');
             $table->timestamps();
-            $table->dateTime('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 

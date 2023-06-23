@@ -12,13 +12,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Model;
 use Spatie\LaravelCipherSweet\Concerns\UsesCipherSweet;
 use Spatie\LaravelCipherSweet\Contracts\CipherSweetEncrypted;
 
 class User extends Model implements JWTSubject, CipherSweetEncrypted
 {
-    use HasApiTokens, HasFactory, Notifiable, UsesCipherSweet;
+    use HasApiTokens, HasFactory, Notifiable, UsesCipherSweet, SoftDeletes;
 
     protected $attributes = [
         'gender' => 'Non Renseigné',

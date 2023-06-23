@@ -22,16 +22,17 @@ extend type Query {
 }
 
 extend type Mutation {
-  createPrompt(input: PromptInput!): Prompt
+    createPrompt(input: PromptInput!): Prompt
+    deletePrompt(id: ID! @whereKey): Prompt @delete @whereAuth(relation: "user")
 }
 
 input PromptInput {
-  user_input: String!
-  is_personnalized: Boolean = false
-  is_opposite: Boolean = false
+    user_input: String!
+    is_personnalized: Boolean = false
+    is_opposite: Boolean = false
 }
 
 input DateRange {
-  from: DateTime!
-  to: DateTime!
+    from: DateTime!
+    to: DateTime!
 }

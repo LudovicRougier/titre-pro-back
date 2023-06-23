@@ -6,12 +6,13 @@ use ParagonIE\CipherSweet\BlindIndex;
 use Illuminate\Database\Eloquent\Model;
 use ParagonIE\CipherSweet\EncryptedRow;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\LaravelCipherSweet\Concerns\UsesCipherSweet;
 use Spatie\LaravelCipherSweet\Contracts\CipherSweetEncrypted;
 
 class Prompt extends Model implements CipherSweetEncrypted
 {
-    use UsesCipherSweet;
+    use UsesCipherSweet, SoftDeletes;
 
 
     protected $attributes = [

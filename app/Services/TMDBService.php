@@ -49,6 +49,12 @@ class TMDBService
             });
         }
 
+        if (empty($items->sortBy($pluckField)->toArray())) {
+            $this->language = 'US';
+
+            return $this->getItems($name);
+        }
+
         return $items->sortBy($pluckField)->toArray();
     }
 
