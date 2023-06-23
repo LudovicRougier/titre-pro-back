@@ -223,7 +223,7 @@ class TMDBService
                     ? $detailedMedia->first_air_date
                     : $detailedMedia->release_date,
                 'runtime'         => $detailedMedia->media_type === 'tv'
-                    ? $detailedMedia->episode_run_time
+                    ? $detailedMedia->last_episode_to_air->runtime
                     : $detailedMedia->runtime,
                 'vote_average'    => $detailedMedia->vote_average * 1000,
                 'directors'       => $directors,
