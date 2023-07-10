@@ -225,7 +225,7 @@ class TMDBService
                 'runtime'         => $detailedMedia->media_type === 'tv'
                     ? $detailedMedia->last_episode_to_air->runtime
                     : $detailedMedia->runtime,
-                'vote_average'    => $detailedMedia->vote_average * 1000,
+                'vote_average'    => $detailedMedia->vote_average,
                 'directors'       => $directors,
                 'actors'          => $actors,
                 'genres'          => $genres,

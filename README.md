@@ -1,66 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Installation guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Prepare the project
 
-## About Laravel
+- Clone the repo :<br>
+`git clone git@github.com:O-clock-Griffon/projet-13-emotions-pictures-back.git emotions-pictures-back`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Install dependencies :
+`composer install`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Create `.env` file by copying `.env.example`<br><br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Set up environments variables
 
-## Learning Laravel
+#### *Optionnal :*
+_You can add the following alias to your `~/.zshrc` or `~/.bashrc` file :<br>
+`alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`<br><br>
+If you, don't, just replace `sail` with `vendor/bin/sail` in the next commands._<br><br>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- If needed, modify the default port values.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Launch build and run containers :<br>
+`sail up -d --build`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Generate JWT key :<br>
+`sail artisan jwt:secret`<br>
+(Fill the `JWT_SECRET` key in `.env` file with the command result if not done automaticaly)
 
-## Laravel Sponsors
+- Generate the encryption key for the Database :<br>
+`sail artisan ciphersweet:generate-key`<br>
+Fill the `CIPHERSWEET_KEY` key in `.env` file with the command result.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Fill the `OPENAI_API_KEY` key in `.env` file.
 
-### Premium Partners
+- Fill the `TMDB_API_TOKEN` key in `.env` file.<br><br>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Run the app
 
-## Contributing
+- Launch Database migrations :<br>
+with seeders : `sail artisan migrate --seed`<br>
+without seeders : `sail artisan migrate`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Restart the containers : `sail up -d`
 
-## Code of Conduct
+You can now visit `http://localhost:{APP_PORT}/graphiql` to use the GraphQL dev server.<br>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Or, you can use `http://localhost:{APP_PORT}/graphql` to make any request.<br>
 
-## Security Vulnerabilities
+If you've seed your Database, you already have 4 users registered : `vincent@test.com`, `philemon@test.com`, `ludovic@test.com` and`julien@test.com`. Their default password is `MyPassword1!`.<br><br>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Utils
 
-## License
+- If you need to access to the PHP container's bash :<br>
+`docker-compose -f docker-compose.yml exec php bash`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- If you need to reset the Database :<br>
+from your host : `sail artisan migrate:fresh --seed`<br>
+from your PHP container : `php artisan migrate:fresh --seed`
+
+- If you need to remove your containers : `sail down`<br>
+(Add `--volumes` to delete volumes too)
+
+- If you need to share your server : `sail share`
