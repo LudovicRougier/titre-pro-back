@@ -50,8 +50,8 @@ If you've seed your Database, you already have 4 users registered : `vincent@tes
 
 ### Utils
 
-- If you need to access to the PHP container's bash :<br>
-`docker-compose -f docker-compose.yml exec php bash`
+- Start a Bash session within the application's container :<br>
+`sail shell`
 
 - If you need to reset the Database :<br>
 from your host : `sail artisan migrate:fresh --seed`<br>
