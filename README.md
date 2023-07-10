@@ -53,11 +53,11 @@ If you've seed your Database, you already have 4 users registered : `vincent@tes
 - Start a Bash session within the application's container :<br>
 `sail shell`
 
-- If you need to reset the Database :<br>
+- Reset the Database :<br>
 from your host : `sail artisan migrate:fresh --seed`<br>
 from your PHP container : `php artisan migrate:fresh --seed`
 
-- If you need to remove your containers : `sail down`<br>
+- Remove your containers : `sail down`<br>
 (Add `--volumes` to delete volumes too)
 
-- If you need to share your server : `sail share`
+- Share your server : `sail share`
