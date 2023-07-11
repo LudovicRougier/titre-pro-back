@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\User;
 
 test('logout an auth user', function () {
-
     $user = $this->logUser();
 
     $result = json_decode(json_decode($this->actingAs($user)->graphQL(/** @lang GraphQL */ '
@@ -12,3 +12,14 @@ test('logout an auth user', function () {
     expect($result->success)->toBeTrue();
     expect($result->message)->toBe('Successfully logged out');
  });
+
+
+ test('logout an unauth user', function () {
+     $user = User::first();
+
+     $result = json_decode($this->actingAs($user)->graphQL(/** @lang GraphQL */ '
+         mutation { logout }
+     ')->content());
+
+     expect($result)->toHaveProperty('errors');
+  });
