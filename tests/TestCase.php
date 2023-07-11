@@ -13,5 +13,4 @@ abstract class TestCase extends BaseTestCase
     use RefreshesSchemaCache;
 
     protected $seed = true;
-
 }
