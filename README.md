@@ -61,3 +61,5 @@ from your PHP container : `php artisan migrate:fresh --seed`
 (Add `--volumes` to delete volumes too)
 
 - Share your server : `sail share`
+
+- Run tests : `sail artisan test`

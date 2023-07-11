@@ -4,7 +4,7 @@
 use App\Models\User;
 
 
-test('register a valid user', function () {
+test('register valid user', function () {
     $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation {
             register(
@@ -33,7 +33,7 @@ test('register a valid user', function () {
 });
 
 
-test('register a user with invalid password', function () {
+test('register user with invalid password', function () {
     $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation {
             register(
@@ -55,7 +55,7 @@ test('register a user with invalid password', function () {
 });
 
 
-test('register a user with existing email', function () {
+test('register user with existing email', function () {
     $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation {
             register(
@@ -77,7 +77,7 @@ test('register a user with existing email', function () {
 });
 
 
-test('register a user with invalid country', function () {
+test('register user with invalid country', function () {
     $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation {
             register(
@@ -99,7 +99,7 @@ test('register a user with invalid country', function () {
 });
 
 
-test('register a user with invalid age', function () {
+test('register user with invalid age', function () {
     $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation {
             register(

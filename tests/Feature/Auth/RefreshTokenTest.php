@@ -1,13 +1,10 @@
 <?php
 
 
-use App\Models\User;
-
-
 test('refresh auth users\'s token', function () {
-    $user = $this->logUser();
+    $this->logUser();
 
-    $result = json_decode(json_decode($this->actingAs($user)->graphQL(/** @lang GraphQL */ '
+    $result = json_decode(json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation { refreshToken }
     ')->content())->data->refreshToken);
 
@@ -17,9 +14,7 @@ test('refresh auth users\'s token', function () {
 
 
  test('refresh unauth user\'s token', function () {
-     $user = User::first();
-
-     $result = json_decode($this->actingAs($user)->graphQL(/** @lang GraphQL */ '
+     $result = json_decode($this->graphQL(/** @lang GraphQL */ '
         mutation { refreshToken }
     ')->content());
 

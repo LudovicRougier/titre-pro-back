@@ -15,16 +15,20 @@ abstract class TestCase extends BaseTestCase
 
     protected $seed = true;
 
-    public function logUser() {
+    public function logUser($emailParam = "vincent@test.com", $passwordParam = "MyPassword1!") {
         $this->graphQL(/** @lang GraphQL */ '
-            mutation {
-                login(
-                    email: "vincent@test.com",
-                    password: "MyPassword1!",
-                )
+            mutation ($email: String!, $password: String!) {
+                login(email: $email, password: $password)
             }
-        ');
+        ', [
+            'email' => $emailParam,
+            'password' => $passwordParam,
+        ]);
 
-        return User::find(1);
+        return $this->user();
+    }
+
+    public function user() {
+        return User::first();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\CountryEnum;
+use App\Enums\GenderEnum;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
