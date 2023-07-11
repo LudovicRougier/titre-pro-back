@@ -19,7 +19,7 @@ extend type Query {
 
 type Mutation {
     updateMe(input: UserInput!): JSON!
-    deleteMe: User
+    deleteMe(input: String!): JSON!
 }
 
 input UserInput {

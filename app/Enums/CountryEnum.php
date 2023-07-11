@@ -5,6 +5,7 @@ namespace App\Enums;
 enum CountryEnum:string
 {
     case AF = "AF";
+    case AS = "AS";
     case AL = "AL";
     case DZ = "DZ";
     case AD = "AD";
@@ -197,5 +198,5 @@ enum CountryEnum:string
     case VN = "VN";
     case YE = "YE";
     case ZM = "ZM";
-    case ZW = "ZW";
 }
+

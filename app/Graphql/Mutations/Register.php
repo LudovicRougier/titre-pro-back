@@ -27,7 +27,7 @@ final class Register
             ];
         }
 
-        $user = User::create($validator->getData());
+        $user = User::create([ ...$validator->getData(), 'gender' => 'Non Renseigné']);
 
         return [
             'status'  => 201,

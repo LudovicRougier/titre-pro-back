@@ -6,7 +6,7 @@ type Media {
     poster_path: String
     release_date: Date
     runtime: Int
-    vote_average: Int
+    vote_average: Float
     directors: [People]!
     actors: [People]!
     genres: [Genre]!
