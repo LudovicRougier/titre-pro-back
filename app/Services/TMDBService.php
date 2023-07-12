@@ -217,7 +217,11 @@ class TMDBService
             $genres         = $this->getMediaGenres($detailedMedia);
             $watchProviders = Auth::user()
                 ? $this->getMediaWatchProviders($detailedMedia)
-                : null;
+                : [
+                    'buy'      => null,
+                    'rent'     => null,
+                    'flatrate' => null,
+                ];
 
             $medias[] = [
                 'id'              => $detailedMedia->id,
