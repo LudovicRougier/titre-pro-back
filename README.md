@@ -5,22 +5,31 @@
 - Clone the repo :<br>
 `git clone git@github.com:O-clock-Griffon/projet-13-emotions-pictures-back.git emotions-pictures-back`
 
-- Install dependencies :
+- Create ***.env*** file by copying ***.env.example***
+
+- Build containers and run them : <br>
+  `docker-compose -f docker-compose.yml up -d --build`
+
+- Run bash within 'php' container : <br>
+  `docker-compose -f docker-compose.yml exec -u 1000 php bash`
+
+- Within 'php' container's bash, install dependencies :
 `composer install`
 
-- Create `.env` file by copying `.env.example`<br><br>
+- Within 'php' container's bash, exit bash session :
+`exit`<br><br>
 
 ### Set up environments variables
 
 #### *Optionnal :*
-_You can add the following alias to your `~/.zshrc` or `~/.bashrc` file :<br>
-`alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`<br><br>
+_You can add `sail` alias to your ***.zshrc*** or ***.bashrc*** file :<br>
+`nano ~/.zshrc` or `nano ~/.bashrc`<br>
+Add the following line at the bottom of the file :
+`alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`<br>
+Save the file and restart your bash.<br><br>
 If you, don't, just replace `sail` with `vendor/bin/sail` in the next commands._<br><br>
 
 - If needed, modify the default port values.
-
-- Launch build and run containers :<br>
-`sail up -d --build`
 
 - Generate JWT key :<br>
 `sail artisan jwt:secret`<br>
