@@ -179,6 +179,15 @@ class TMDBService
         }
 
         $watchProviders = $watchProviders[$language];
+        $wantedWatchProviders = collect(Auth::user()->wanted_watch_providers)->pluck('provider_name')->all();
+
+        foreach(['buy', 'rent', 'flatrate'] as $cat) {
+            $watchProviders[$cat] = key_exists($cat, $watchProviders)
+                ? array_filter($watchProviders[$cat], function ($provider) use ($wantedWatchProviders) {
+                    return in_array($provider['provider_name'], $wantedWatchProviders);
+                })
+                : null;
+        }
 
         return [
             'buy'      => $watchProviders['buy'] ?? null,
