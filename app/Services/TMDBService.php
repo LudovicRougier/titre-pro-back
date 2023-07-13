@@ -174,8 +174,10 @@ class TMDBService
 
         $watchProviders = json_decode($response, true)['results'];
 
+        // dd($watchProviders);
+
         if (!$language || !isset($watchProviders[$language])) {
-            return null;
+            $watchProviders = [];
         }
 
         $watchProviders = $watchProviders[$language];
@@ -186,14 +188,10 @@ class TMDBService
                 ? array_filter($watchProviders[$cat], function ($provider) use ($wantedWatchProviders) {
                     return in_array($provider['provider_name'], $wantedWatchProviders);
                 })
-                : null;
+                : [];
         }
 
-        return [
-            'buy'      => $watchProviders['buy'] ?? null,
-            'rent'     => $watchProviders['rent'] ?? null,
-            'flatrate' => $watchProviders['flatrate'] ?? null,
-        ];
+        return $watchProviders;
     }
 
     public function getMedias($openaiResponse, $isEmotion)
@@ -218,9 +216,9 @@ class TMDBService
             $watchProviders = Auth::user()
                 ? $this->getMediaWatchProviders($detailedMedia)
                 : [
-                    'buy'      => null,
-                    'rent'     => null,
-                    'flatrate' => null,
+                    'buy'      => [],
+                    'rent'     => [],
+                    'flatrate' => [],
                 ];
 
             $medias[] = [
