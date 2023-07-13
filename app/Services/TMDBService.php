@@ -174,8 +174,6 @@ class TMDBService
 
         $watchProviders = json_decode($response, true)['results'];
 
-        // dd($watchProviders);
-
         if (!$language || !isset($watchProviders[$language])) {
             $watchProviders = [];
         }
