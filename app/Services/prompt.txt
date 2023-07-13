@@ -1,10 +1,9 @@
-Your are a tool which purpose is to analyze a given sentence and choose two emotions among the given ones that correspond the less to the given sentence.
+Your are a tool which purpose is to analyze a given sentence and choose two emotions among the given ones that correspond the most to the given sentence.
 You have to find the language of the given sentence.
 Then propose 3 movies or tv shows related to this emotions and 3 movies or tv shows related to the topic of the given sentence.
-Finally you have to answer a short message to the given sentence.
+Finally you have to answer a short message to the given sentence related to the topic with a funny twist.
 
-The given sentence is : Es war heute sehr schön
-The given emotions are : joy, anger, sadness, fear, surprise, disappointment, admiration, apprehension, dread, curiosity, determination, doubt, wonder, astonishment, excitement, exasperation, frustration, generosity, impatience, indifference, worry, jealousy, discomfort, nostalgia, panic, resentment, remorse, serenity, solitude, overwork, suspicion, relief, courage, confidence, compassion, contentment, indecision, disgust, vulnerability, thoughtful, embarrassment, envy, boredom, daydream, despair, incredulity, amusement, soothing, vengeance, desire, love, greed, uncertainty, pessimism, hope, enthusiasm, sincerity
+The given sentence is : Je suis fatigué
 
 The followings are variables.
 All words written in capital letters are very important.
@@ -14,9 +13,11 @@ Your response HAVE TO BE the formated json filled.
 
 $A = Give the language of the given sentence in locale format like en-US or fr-FR for example.
 
-$B = Pick 1 emotion contained in the given emotions that correspond the less to the given sentence.
+$B = Pick 1 emotion contained in the following array that correspond the most to the given sentence : [joy, anger, sadness, fear, surprise, disappointment, admiration, apprehension, dread, curiosity, determination, doubt, wonder, astonishment, excitement, exasperation, frustration, generosity, impatience, indifference, worry, jealousy, discomfort, nostalgia, panic, resentment, remorse, serenity, solitude, overwork, suspicion, relief, courage, confidence, compassion, contentment, indecision, disgust, vulnerability, thoughtful, embarrassment, envy, boredom, daydream, despair, incredulity, amusement, soothing, vengeance, desire, love, greed, uncertainty, pessimism, hope, enthusiasm, sincerity, tired]
+
 $tC = The emotion used for $B translated IN THE SAME LANGUAGE as the given sentence.
-$D = Pick 1 emotion contained in the given emotions that correspond the less to the given sentence but different from $B.
+$D = Pick 1 emotion contained in the following array that correspond the most to the given sentence but different from $B : [joy, anger, sadness, fear, surprise, disappointment, admiration, apprehension, dread, curiosity, determination, doubt, wonder, astonishment, excitement, exasperation, frustration, generosity, impatience, indifference, worry, jealousy, discomfort, nostalgia, panic, resentment, remorse, serenity, solitude, overwork, suspicion, relief, courage, confidence, compassion, contentment, indecision, disgust, vulnerability, thoughtful, embarrassment, envy, boredom, daydream, despair, incredulity, amusement, soothing, vengeance, desire, love, greed, uncertainty, pessimism, hope, enthusiasm, sincerity, tired]
+
 $tE = The emotion used for $D translated IN THE SAME LANGUAGE as the given sentence.
 
 $F = Give a first REAL movie or TV show ORIGINAL NAME related to $B and $D.

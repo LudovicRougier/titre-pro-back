@@ -24,7 +24,7 @@ class OpenAIService
         $this->prompt = 'Your are a tool which purpose is to analyze a given sentence and choose two emotions among the given ones that correspond the '.$this->isOpposite.' to the given sentence.
         You have to find the language of the given sentence.
         Then propose 3 movies or tv shows related to this emotions and 3 movies or tv shows related to the topic of the given sentence.
-        Finally you have to answer a short message to the given sentence.
+        Finally you have to answer a short message to the given sentence related to the topic with a funny twist.
 
         The given sentence is : '.$this->userInput.'
         The given emotions are : '.$this->emotions.'.
@@ -136,6 +136,28 @@ class OpenAIService
                 && empty(json_decode($response->choices[0]->message->content)->emotion->sub_emotion))
             || (empty(json_decode($response->choices[0]->message->content)->movies->related_to_emotion)
                 && empty(json_decode($response->choices[0]->message->content)->movies->related_to_topic));
+
+        if(!$responseIsInvalid) {
+            $responseContent = json_decode($response->choices[0]->message->content);
+            $mainEmotion = $responseContent->emotion->main_emotion;
+            $subEmotion = $responseContent->emotion->sub_emotion;
+
+            if (!str_contains($this->emotions, $mainEmotion)) {
+                Emotion::create([
+                    'name' => $mainEmotion,
+                    'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+                    'is_positive' => rand(0, 1),
+                ]);
+            }
+
+            if (!str_contains($this->emotions, $subEmotion)) {
+                Emotion::create([
+                    'name' => $subEmotion,
+                    'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+                    'is_positive' => rand(0, 1),
+                ]);
+            }
+        }
 
         return $responseIsInvalid
             ? $this->getOpenAIResponse()
